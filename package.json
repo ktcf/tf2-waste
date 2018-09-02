@@ -1,0 +1,23 @@
+{
+  "name": "tf2-waste",
+  "version": "1.0.0",
+  "description": "Legacy module. You probably don't want to use it",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ktcf/tf2-waste.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ktcf/tf2-waste/issues"
+  },
+  "homepage": "https://github.com/ktcf/tf2-waste#readme",
+  "dependencies": {
+    "merge": "^1.2.0",
+    "tf2": "^2.1.2"
+  }
+}
