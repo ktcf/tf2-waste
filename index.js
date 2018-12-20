@@ -100,7 +100,7 @@ Waste.prototype.start = function () {
 
   this.tf2.once('itemSchemaLoaded', function() {
     console.log('schema loaded');
-    fs.writeFileSync('itemSchema.json', JSON.stringify(self.tf2.itemSchema));
+    fs.writeFileSync('itemSchema.json', JSON.stringify(self.tf2.itemSchema, null, 4));
   });
 }
 
