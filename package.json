@@ -1,6 +1,6 @@
 {
   "name": "tf2-waste",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Legacy module. You probably don't want to use it",
   "main": "index.js",
   "scripts": {
