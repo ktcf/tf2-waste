@@ -49,7 +49,7 @@ function Waste (client, opts) {
   });
 
   this.crap = [
-    166, 241, 261, 536, 537, 655, 673, 994, 5022, 5083, 5718, 5734, 5742, 5752, 
+    166, 241, 261, 536, 537, 655, 673, 994, 5022, 5083, 5718, 5734, 5742, 5752,
     5781, 5802, 5803, 5849, 5859, 5867, 5871, 5875, 5888, 5893, 5894, 5897, 5902,
     5904
   ];
@@ -173,11 +173,11 @@ Waste.prototype.mapGifts = function () {
 
   var array = [];
   var backpack = self.tf2.backpack.map(function(item) {
-    return merge(true, self.tf2.itemSchema.items[item.defIndex], item);
+    return merge(true, self.tf2.itemSchema.items[item.def_index], item);
   });
 
   backpack.forEach(function(item) {
-    if (gifts.indexOf(item.defIndex) > -1) {
+    if (gifts.indexOf(item.def_index) > -1) {
       array.push(item.id);
     }
   })
@@ -189,7 +189,7 @@ Waste.prototype.mapCrap = function () {
   var self = this;
   var array = [];
   var backpack = self.tf2.backpack.map(function(item) {
-    return merge(true, self.tf2.itemSchema.items[item.defIndex], item);
+    return merge(true, self.tf2.itemSchema.items[item.def_index], item);
   }).filter(function(item) {
     return (
       item.name.indexOf('Festive') == -1 &&
@@ -200,7 +200,7 @@ Waste.prototype.mapCrap = function () {
   });
 
   backpack.forEach(function(item) {
-    if (self.crap.indexOf(item.defIndex) > -1 || item.origin == 17) {
+    if (self.crap.indexOf(item.def_index) > -1 || item.origin == 17) {
       array.push(item.id);
     }
   })
@@ -208,7 +208,7 @@ Waste.prototype.mapCrap = function () {
   self.tf2.backpack.forEach(function(item) {
     if (item.flags == 20) {
       Object.keys(self.weaponsByClass).forEach(function(cls) {
-        if (self.weaponsByClass[cls].indexOf(item.defIndex) > -1) {
+        if (self.weaponsByClass[cls].indexOf(item.def_index) > -1) {
           array.push(item.id);
         }
       })
@@ -219,11 +219,11 @@ Waste.prototype.mapCrap = function () {
     self.tf2.backpack.forEach(function(item) {
       if (item.attribute.length > 0) {
         item.attribute.forEach(function(attr) {
-          if (attr.defIndex == 153) {
+          if (attr.def_index == 153) {
             array.push(item.id);
-          } else if (attr.defIndex == 211) {
+          } else if (attr.def_index == 211) {
             Object.keys(self.weaponsByClass).forEach(function(cls) {
-              if (self.weaponsByClass[cls].indexOf(item.defIndex) > -1) {
+              if (self.weaponsByClass[cls].indexOf(item.def_index) > -1) {
                 array.push(item.id);
               }
             })
@@ -239,7 +239,7 @@ Waste.prototype.mapCrap = function () {
 Waste.prototype.mapWeps = function () {
   var self = this;
   var backpack = self.tf2.backpack.map(function(item) {
-    return merge(true, self.tf2.itemSchema.items[item.defIndex], item);
+    return merge(true, self.tf2.itemSchema.items[item.def_index], item);
   }).filter(function(item) {
     return (
       item.flags != 20 &&
@@ -254,7 +254,7 @@ Waste.prototype.mapWeps = function () {
   for (var i = 0; i < backpack.length; i++) {
     if (backpack[i].attribute.length > 0) {
       backpack[i].attribute.forEach(function(attr) {
-        if (attr.defIndex == 211) {
+        if (attr.def_index == 211) {
           backpack.splice(i, 1);
         }
       });
@@ -263,10 +263,10 @@ Waste.prototype.mapWeps = function () {
 
   var items = {};
   backpack.forEach(function(item) {
-    if (items.hasOwnProperty(item.defIndex))
-      items[item.defIndex].push(item);
+    if (items.hasOwnProperty(item.def_index))
+      items[item.def_index].push(item);
     else
-      items[item.defIndex] = [item];
+      items[item.def_index] = [item];
   });
   if (self.safeMode)
     var threshold = 1;
@@ -300,7 +300,7 @@ Waste.prototype.mapWeps = function () {
 
   dupes.forEach(function(item) {
     Object.keys(self.weaponsByClass).forEach(function(cls) {
-      if (self.weaponsByClass[cls].indexOf(item.defIndex) > -1) {
+      if (self.weaponsByClass[cls].indexOf(item.def_index) > -1) {
         byClass[cls].push(item.id);
       }
     })
@@ -323,10 +323,10 @@ Waste.prototype.mapMetal = function (def) {
   var self = this;
   var array = [];
   var backpack = self.tf2.backpack.map(function(item) {
-    return merge(true, self.tf2.itemSchema.items[item.defIndex], item);
+    return merge(true, self.tf2.itemSchema.items[item.def_index], item);
   });
   backpack.forEach(function(item) {
-    if (item.defIndex == def) {
+    if (item.def_index == def) {
       array.push(item.id);
     }
   })
@@ -454,7 +454,7 @@ Waste.prototype.getNameById = function () {
 
   }
   this.tf2.backpack.forEach(function(item) {
-    var n = self.tf2.itemSchema.items[item.defIndex].name;
+    var n = self.tf2.itemSchema.items[item.def_index].name;
     if (ex[n]) {
       self.itemNames[item.id] = ex[n];
     } else {
