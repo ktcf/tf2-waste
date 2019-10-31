@@ -166,23 +166,7 @@ class Waste {
   }
 
   mapGifts() {
-    // var self = this;
-    // var gifts = [5085];
-  
-    // var array = [];
-    // var backpack = self.tf2.backpack.map(function(item) {
-    //   return merge(true, self.tf2.itemSchema.items[item.def_index], item);
-    // });
-  
-    // backpack.forEach(function(item) {
-    //   if (gifts.indexOf(item.def_index) > -1) {
-    //     array.push(item.id);
-    //   }
-    // })
-
     return this.tf2.backpack.filter((item) => item.id == 5085);
-  
-    //return array;
   }
 
   mapCrap() {
@@ -241,15 +225,19 @@ class Waste {
 
   mapWeps() {
     var self = this;
+    self.tf2.backpack.forEach(item => {
+      if (Number(item.id) == 8165569884) {
+        console.log(item);
+      }
+    });
     var backpack = self.tf2.backpack.filter((item) => {
       const isGift = item.attribute.some((attr) => {
         return attr.def_index == 185 || attr.def_index == 186;
       });
       return (
-        isGift == false &&
         this.weapons.includes(item.def_index) && 
         item.flags != 20 &&
-        item.origin == 0 &&
+        (item.origin == 0 || item.origin == 20) &&
         item.quality == 6
       );
     });
