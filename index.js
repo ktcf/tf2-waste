@@ -1,6 +1,7 @@
 const TeamFortress2 = require('tf2');
 const chunk = require('chunk');
 const crap = require('./resources/crap');
+const weaponsByClass = require('./resources/weaponsByClass');
 
 class Waste {
     constructor(client, opts) {
@@ -9,52 +10,16 @@ class Waste {
 
         this.safeMode = opts.safeMode || false;
 
-        // this.itemNames = {};
-        this.weaponsByClass = {
-            scout: [
-                44, 45, 46, 163, 220, 221, 222, 317, 325, 349, 355, 448, 449, 450, 648,
-                772, 773, 812, 833, 1103
-            ],
-            soldier: [
-                127, 128, 129, 133, 154, 226, 228, 237, 354, 357, 414, 415, 416, 441, 442,
-                444, 447, 474, 513, 730, 775, 939, 1101, 1104, 1153
-            ],
-            pyro: [
-                38, 39, 40, 153, 214, 215, 326, 348, 351, 457, 593, 594, 595, 739, 740,
-                741, 813, 834, 1178, 1179, 1180, 1181
-            ],
-            demoman: [
-                130, 131, 132, 172, 265, 307, 308, 327, 404, 405, 406, 482, 608, 609, 996,
-                1099, 1150, 1151
-            ],
-            heavy: [
-                41, 42, 43, 159, 239, 310, 311, 312, 331, 424, 425, 426, 656, 811, 832, 1190
-            ],
-            engineer: [
-                140, 141, 142, 155, 329, 527, 528, 588, 589, 997
-            ],
-            medic: [
-                35, 36, 37, 173, 304, 305, 411, 412, 413, 998
-            ],
-            sniper: [
-                56, 57, 58, 171, 230, 231, 232, 401, 402, 526, 642, 751, 752, 1092, 1098
-            ],
-            spy: [
-                59, 60, 61, 224, 225, 356, 460, 461, 525, 649, 810, 831
-            ]
-        };
-
         this.weapons = [];
 
-        Object.keys(this.weaponsByClass).forEach(cls => {
-            this.weaponsByClass[cls].forEach(index => {
+        Object.keys(weaponsByClass).forEach(cls => {
+            weaponsByClass[cls].forEach(index => {
                 this.weapons.push(index);
             })
         });
     }
 
     start() {
-        console.log("HI");
         var self = this;
 
         this.client.gamesPlayed([440]);
@@ -78,12 +43,9 @@ class Waste {
         var self = this;
 
         if (self.mapCrap().length > 0) {
-            //self.getNameById();
             self.deleteCrapStep(self.mapCrap());
         } else if (self.mapWeps()) {
-            //self.getNameById();
             var weps = self.mapWeps();
-            //var classes = Object.keys(weps);
 
             for (const cls of Object.keys(weps)) {
                 if (weps[cls].length > 1) {
@@ -117,7 +79,7 @@ class Waste {
 
     mapCrap() {
         const result = this.tf2.backpack.filter((item) => {
-            return item.quality == 6 && this.crap.includes(item.def_index);
+            return item.quality == 6 && crap.includes(item.def_index);
         }).map((item) => item.id);
 
         this.tf2.backpack.forEach(item => {
@@ -191,8 +153,8 @@ class Waste {
         };
 
         dupes.forEach(function(item) {
-            Object.keys(self.weaponsByClass).forEach(function(cls) {
-                if (self.weaponsByClass[cls].indexOf(item.def_index) > -1) {
+            Object.keys(weaponsByClass).forEach(function(cls) {
+                if (weaponsByClass[cls].indexOf(item.def_index) > -1) {
                     byClass[cls].push(item.id);
                 }
             })
@@ -205,7 +167,6 @@ class Waste {
             }
         })
 
-        //console.log(byClass);
         if (length > 0)
             return byClass;
         else
@@ -264,7 +225,6 @@ class Waste {
 
     deleteSync(crap, callback) {
         var self = this;
-        //console.log('Deleting => ' + self.itemNames[crap]);
         self.tf2.deleteItem(crap);
 
         self.tf2.once('itemRemoved', function() {
